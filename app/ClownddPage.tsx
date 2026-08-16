@@ -13,8 +13,6 @@ const socials = [
   { platform: "TikTok", handle: "@clowndd_", href: "https://www.tiktok.com/@clowndd_" },
 ];
 
-const assetBaseUrl = "https://clowndd.jero1141.chatgpt.site";
-
 export function ClownddPage() {
   const [pointer, setPointer] = useState({ x: 0, y: 0 });
   const [sent, setSent] = useState(false);
@@ -267,11 +265,10 @@ function ProductWorld({ journey = false }: { journey?: boolean }) {
       scene.add(ambient, keyLight, rimLight);
 
       const loader = new THREE.TextureLoader();
-      loader.setCrossOrigin("anonymous");
-      const frontTexture = loader.load(`${assetBaseUrl}/clowned-jorts-front-v2-cutout.png`);
-      const backTexture = loader.load(`${assetBaseUrl}/clowndd-jorts-back-cutout.png`);
-      const hoodieFrontTexture = loader.load(`${assetBaseUrl}/clowned-hoodie-front-cutout.png`);
-      const hoodieBackTexture = loader.load(`${assetBaseUrl}/clowned-hoodie-back-cutout.png`);
+      const frontTexture = loader.load("/clowned-jorts-front-v2-cutout.png");
+      const backTexture = loader.load("/clowndd-jorts-back-cutout.png");
+      const hoodieFrontTexture = loader.load("/clowned-hoodie-front-cutout.png");
+      const hoodieBackTexture = loader.load("/clowned-hoodie-back-cutout.png");
       frontTexture.colorSpace = THREE.SRGBColorSpace;
       backTexture.colorSpace = THREE.SRGBColorSpace;
       hoodieFrontTexture.colorSpace = THREE.SRGBColorSpace;
