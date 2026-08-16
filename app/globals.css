@@ -984,6 +984,16 @@ img {
   outline: 0;
 }
 
+.contact-form .form-honey {
+  display: none;
+}
+
+.form-error {
+  color: #5a104f;
+  font-size: 0.86rem;
+  margin: 8px 0 0;
+}
+
 .contact-form button {
   align-items: center;
   background: var(--ink);
@@ -1000,6 +1010,11 @@ img {
   min-height: 54px;
   padding: 0 28px;
   text-transform: uppercase;
+}
+
+.contact-form button:disabled {
+  cursor: wait;
+  opacity: 0.58;
 }
 
 .thanks {
