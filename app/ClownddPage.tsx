@@ -386,7 +386,7 @@ function ProductWorld({ journey = false }: { journey?: boolean }) {
           return;
         }
 
-        const section = mount.closest(".product-journey");
+        const section = mountElement.closest(".product-journey");
         const rect = section?.getBoundingClientRect();
         const travel = (rect?.height ?? 1) - window.innerHeight;
         scrollProgress.current = Math.min(
