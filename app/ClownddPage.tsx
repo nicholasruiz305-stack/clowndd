@@ -16,6 +16,8 @@ const socials = [
 export function ClownddPage() {
   const [pointer, setPointer] = useState({ x: 0, y: 0 });
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const shopRef = useRef<HTMLElement | null>(null);
 
   const floatStyle = useMemo(
@@ -61,9 +63,43 @@ export function ClownddPage() {
     });
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSent(true);
+    setSending(true);
+    setSubmitError("");
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/nicholasruiz305@gmail.com", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.get("name"),
+          email: formData.get("email"),
+          piece: formData.get("piece") || "Not specified",
+          _subject: "New clowned website signup",
+          _template: "table",
+          _captcha: "false",
+          _honey: formData.get("_honey"),
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("The form could not be sent.");
+      }
+
+      form.reset();
+      setSent(true);
+    } catch {
+      setSubmitError("Something did not send. Try again in a minute.");
+    } finally {
+      setSending(false);
+    }
   }
 
   return (
@@ -181,13 +217,23 @@ export function ClownddPage() {
             <div className="contact-grid">
               <p>From zero to a real brand.</p>
               <form className="contact-form" onSubmit={handleSubmit}>
+                <input
+                  aria-hidden="true"
+                  className="form-honey"
+                  name="_honey"
+                  tabIndex={-1}
+                  type="text"
+                />
                 <label htmlFor="name">Your name</label>
                 <input id="name" name="name" type="text" required />
                 <label htmlFor="email">Your email</label>
                 <input id="email" name="email" type="email" required />
                 <label htmlFor="piece">The piece you&apos;re watching</label>
                 <input id="piece" name="piece" type="text" />
-                <button type="submit">Send ↓</button>
+                {submitError ? <p className="form-error">{submitError}</p> : null}
+                <button type="submit" disabled={sending}>
+                  {sending ? "Sending..." : "Send ↓"}
+                </button>
               </form>
             </div>
           </>
